@@ -9,3 +9,11 @@
 	* Tensorflow : To be able to correctly classify french stream messages, a custom model was needed. 
 			This model can be reproduced using this repository.
 		* https://github.com/lheuveline/wikipedia_discussions_USE_transfer_learning
+
+
+* Workflow [WIP] :
+
+	* Use docker-compose.yml to control components usage :
+
+		* To start project on specific stream : [CMD]
+		* To train new classifier : [CMD]
