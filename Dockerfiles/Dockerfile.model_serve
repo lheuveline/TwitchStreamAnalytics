@@ -1,0 +1,16 @@
+FROM tensorflow/serving:latest
+
+
+ENV MODEL_LINK="https://github.com/lheuveline/wikipedia_discussions_USE_transfer_learning/releases/download/0.0.2/frwikimedia_use_50_cat.zip"
+
+RUN apt-get -y update && apt-get -y upgrade
+RUN apt-get install -y wget unzip
+
+# DEV - Need to deploy from other repo
+RUN wget ${MODEL_LINK}
+
+RUN unzip frwikimedia_use_50_cat.zip -d /models/
+
+ENV MODEL_NAME frwikimedia_use_50_cat
+
+ENTRYPOINT ["/usr/bin/tf_serving_entrypoint.sh"]

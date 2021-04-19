@@ -1,0 +1,10 @@
+version: "3.3"
+
+services:
+    model_serve:
+        container_name: model_serve
+        build :
+            context: .
+            dockerfile: Dockerfiles/Dockerfile.model_serve
+        ports:
+            - 8501:8501
