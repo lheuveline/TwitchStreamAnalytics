@@ -1,10 +1,60 @@
 version: "3.3"
 
 services:
+    
+    redis:
+
+        container_name: twitch-redis
+        image: redis
+        networks: 
+            default:
+                ipv4_address: 172.17.0.2
+
     model_serve:
+
         container_name: model_serve
         build :
             context: .
             dockerfile: Dockerfiles/Dockerfile.model_serve
         ports:
             - 8501:8501
+        networks: 
+            default:
+                ipv4_address: 172.17.0.3
+
+    dashboard:
+
+        container_name: dashboard
+        build:
+            context: .
+            dockerfile: Dockerfiles/Dockerfile.dashboard
+        networks: 
+            default:
+                ipv4_address: 172.17.0.4
+
+    spark-driver:
+
+        container_name: spark-driver
+        image: bitnami/spark:3.1.1
+        environment:
+            - SPARK_MODE: master
+        networks: 
+            default:
+                ipv4_address: 172.17.0.5
+        
+    spark-worker:
+
+        container_name : spark-worker
+        image: bitnami/spark:3.1.1
+        environment:
+            - SPARK_MODE: worker
+            - SPARK_WORKER_MEMORY: 8g
+        networks: 
+            - default
+
+networks:
+
+    default:
+        ipam:
+            config:
+                - subnet: 172.17.0.0/16
