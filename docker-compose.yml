@@ -31,6 +31,10 @@ services:
         networks: 
             default:
                 ipv4_address: 172.17.0.4
+        depends_on: 
+            - "redis"
+            - "spark-driver"
+            - "spark-worker"
 
     spark-driver:
 
@@ -41,6 +45,9 @@ services:
         networks: 
             default:
                 ipv4_address: 172.17.0.5
+        depends_on: 
+            - "redis"
+            - "model_serve"
         
     spark-worker:
 
@@ -51,6 +58,8 @@ services:
             - SPARK_WORKER_MEMORY: 8g
         networks: 
             - default
+        depends_on: 
+            - "spark-driver"
 
 networks:
 
